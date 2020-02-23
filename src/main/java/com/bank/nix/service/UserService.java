@@ -28,7 +28,7 @@ public class UserService {
 
 	public User create(UserDTO dto) {
 		if(dto.getName() == null || dto.getRegisteredNumber() == null) {
-			throw new NixBusinessException(NixBusinessException.INVALID_DATA);
+			throw new NixBusinessException(NixBusinessException.USER_INVALID_DATA);
 		}
 		Optional<User> verifyRegisteredNumber = userRepository.findByRegisteredNumber(dto.getRegisteredNumber());
 		if(verifyRegisteredNumber.isPresent()) {

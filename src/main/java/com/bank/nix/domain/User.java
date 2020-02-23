@@ -1,5 +1,8 @@
 package com.bank.nix.domain;
 
+import java.util.Set;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,6 +18,7 @@ public class User {
 	private Long id;
 	private String name;
 	private String registeredNumber;
+	private Set<BankAccount> bankAccounts;
 
 	public User() {
 	}
@@ -46,5 +50,14 @@ public class User {
 
 	public void setRegisteredNumber(String registeredNumber) {
 		this.registeredNumber = registeredNumber.replaceAll("[^0-9]", "");
+	}
+
+	@Column(name = "ID_BANK_ACCOUNT")
+	public Set<BankAccount> getBankAccounts() {
+		return bankAccounts;
+	}
+
+	public void setBankAccounts(Set<BankAccount> bankAccounts) {
+		this.bankAccounts = bankAccounts;
 	}
 }
