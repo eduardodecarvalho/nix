@@ -15,6 +15,7 @@ public class BankAccount {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	private Long idUser;
 	private String accountNumber;
 	private String bankOffice;
 	private Bank bank;
@@ -58,6 +59,14 @@ public class BankAccount {
 
 	public void setBalance(BigDecimal balance) {
 		this.balance = balance;
+	}
+
+	public Long getIdUser() {
+		return idUser;
+	}
+
+	public void setIdUser(Long idUser) {
+		this.idUser = idUser;
 	}
 
 }
