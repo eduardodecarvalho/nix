@@ -2,62 +2,66 @@ package com.bank.nix.domain;
 
 import java.util.Set;
 
-import javax.persistence.Column;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "USER")
 public class User {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	private String name;
-	private String registeredNumber;
-	private Set<BankAccount> bankAccounts;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String name;
+    private String registeredNumber;
 
-	public User() {
-	}
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<BankAccount> bankAccounts;
 
-	public User(String name, String registeredNumber) {
-		this.name = name;
-		this.registeredNumber = registeredNumber;
-	}
+    public User() {
+    }
 
-	public Long getId() {
-		return id;
-	}
+    public User(final String name, final String registeredNumber) {
+        this.name = name;
+        this.registeredNumber = registeredNumber;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setId(final Long id) {
+        this.id = id;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public String getRegisteredNumber() {
-		return registeredNumber;
-	}
+    public void setName(final String name) {
+        this.name = name;
+    }
 
-	public void setRegisteredNumber(String registeredNumber) {
-		this.registeredNumber = registeredNumber.replaceAll("[^0-9]", "");
-	}
+    public String getRegisteredNumber() {
+        return registeredNumber;
+    }
 
-	@Column(name = "ID_BANK_ACCOUNT")
-	public Set<BankAccount> getBankAccounts() {
-		return bankAccounts;
-	}
+    public void setRegisteredNumber(final String registeredNumber) {
+        this.registeredNumber = registeredNumber.replaceAll("[^0-9]", "");
+    }
 
-	public void setBankAccounts(Set<BankAccount> bankAccounts) {
-		this.bankAccounts = bankAccounts;
-	}
+//    @OneToMany(mappedBy = "id_user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    public Set<BankAccount> getBankAccounts() {
+        return bankAccounts;
+    }
+
+    public void setBankAccounts(final Set<BankAccount> bankAccounts) {
+        this.bankAccounts = bankAccounts;
+    }
 }
