@@ -2,11 +2,12 @@ package com.bank.nix.domain;
 
 import java.util.Set;
 
-import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -18,7 +19,8 @@ public class User {
 	private Long id;
 	private String name;
 	private String registeredNumber;
-	private Set<BankAccount> bankAccounts;
+	@ElementCollection(targetClass=Integer.class)
+	private Set<BankAccount> idBankAccounts;
 
 	public User() {
 	}
@@ -52,12 +54,13 @@ public class User {
 		this.registeredNumber = registeredNumber.replaceAll("[^0-9]", "");
 	}
 
-	@Column(name = "ID_BANK_ACCOUNT")
-	public Set<BankAccount> getBankAccounts() {
-		return bankAccounts;
+	@OneToMany(mappedBy = "BANK_ACCOUNT")
+	public Set<BankAccount> getIdBankAccounts() {
+		return idBankAccounts;
 	}
 
-	public void setBankAccounts(Set<BankAccount> bankAccounts) {
-		this.bankAccounts = bankAccounts;
+	public void setIdBankAccounts(Set<BankAccount> idBankAccounts) {
+		this.idBankAccounts = idBankAccounts;
 	}
+
 }

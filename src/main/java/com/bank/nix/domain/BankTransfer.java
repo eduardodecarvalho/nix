@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.bank.nix.domain.enums.Type;
@@ -30,6 +32,8 @@ public class BankTransfer {
 		this.id = id;
 	}
 
+	@ManyToOne
+	@JoinColumn(name = "credit_transactions")
 	public BankAccount getIdBankAccountRecipient() {
 		return idBankAccountRecipient;
 	}
@@ -38,6 +42,8 @@ public class BankTransfer {
 		this.idBankAccountRecipient = idBankAccountRecipient;
 	}
 
+	@ManyToOne
+	@JoinColumn(name = "debit_Transactions")
 	public BankAccount getIdBankAccountDepositor() {
 		return idBankAccountDepositor;
 	}

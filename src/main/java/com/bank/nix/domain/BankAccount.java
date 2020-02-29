@@ -1,11 +1,16 @@
 package com.bank.nix.domain;
 
 import java.math.BigDecimal;
+import java.util.List;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -15,11 +20,15 @@ public class BankAccount {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private Long idUser;
+	private User idUser;
 	private String accountNumber;
 	private String bankOffice;
 	private Bank bank;
 	private BigDecimal balance;
+	@ElementCollection(targetClass=Integer.class)
+	private List<BankTransfer> creditTransactions;
+	@ElementCollection(targetClass=Integer.class)
+	private List<BankTransfer> debitTransactions;
 
 	public Long getId() {
 		return id;
@@ -61,12 +70,32 @@ public class BankAccount {
 		this.balance = balance;
 	}
 
-	public Long getIdUser() {
+	@ManyToOne
+	@JoinColumn(name = "id_bank_account")
+	public User getIdUser() {
 		return idUser;
 	}
 
-	public void setIdUser(Long idUser) {
+	public void setIdUser(User idUser) {
 		this.idUser = idUser;
+	}
+
+	@OneToMany(mappedBy = "BANK_TRANSFER")
+	public List<BankTransfer> getCreditTransactions() {
+		return creditTransactions;
+	}
+
+	public void setCreditTransactions(List<BankTransfer> creditTransactions) {
+		this.creditTransactions = creditTransactions;
+	}
+
+	@OneToMany(mappedBy = "BANK_TRANSFER")
+	public List<BankTransfer> getDebitTransactions() {
+		return debitTransactions;
+	}
+
+	public void setDebitTransactions(List<BankTransfer> debitTransactions) {
+		this.debitTransactions = debitTransactions;
 	}
 
 }
