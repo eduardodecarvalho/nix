@@ -1,82 +1,91 @@
 package com.bank.nix.domain;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.sun.istack.NotNull;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "BANK_ACCOUNT")
 public class BankAccount {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private User user;
-    private String accountNumber;
-    private String bankOffice;
-    private Bank bank;
-    private BigDecimal balance;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    public Long getId() {
-        return id;
-    }
+	@ManyToOne
+	@JoinColumn(name = "id_user")
+	private User user;
+	private String accountNumber;
+	private String bankOffice;
+	private BigDecimal balance;
+	@ManyToOne
+	@JoinColumn(name = "id_bank")
+	private Bank bank;
 
-    public void setId(final Long id) {
-        this.id = id;
-    }
+	@JsonIgnore
+	@OneToMany(mappedBy = "bankAccountCredit")
+	private List<BankTransfer> creditTransactions;
 
-    public String getAccountNumber() {
-        return accountNumber;
-    }
+	@JsonIgnore
+	@OneToMany(mappedBy = "bankAccountDebit")
+	private List<BankTransfer> debitTransactions;
 
-    public void setAccountNumber(final String accountNumber) {
-        this.accountNumber = accountNumber;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public String getBankOffice() {
-        return bankOffice;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public void setBankOffice(final String bankOffice) {
-        this.bankOffice = bankOffice;
-    }
+	public User getUser() {
+		return user;
+	}
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ID_BANK")
-    @NotNull
-    public Bank getBank() {
-        return bank;
-    }
+	public void setUser(User user) {
+		this.user = user;
+	}
 
-    public void setBank(final Bank bank) {
-        this.bank = bank;
-    }
+	public String getAccountNumber() {
+		return accountNumber;
+	}
 
-    public BigDecimal getBalance() {
-        return balance;
-    }
+	public void setAccountNumber(String accountNumber) {
+		this.accountNumber = accountNumber;
+	}
 
-    public void setBalance(final BigDecimal balance) {
-        this.balance = balance;
-    }
+	public String getBankOffice() {
+		return bankOffice;
+	}
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ID_USER")
-    public User getUser() {
-        return user;
-    }
+	public void setBankOffice(String bankOffice) {
+		this.bankOffice = bankOffice;
+	}
 
-    public void setUser(final User user) {
-        this.user = user;
-    }
+	public BigDecimal getBalance() {
+		return balance;
+	}
+
+	public void setBalance(BigDecimal balance) {
+		this.balance = balance;
+	}
+
+	public Bank getBank() {
+		return bank;
+	}
+
+	public void setBank(Bank bank) {
+		this.bank = bank;
+	}
 
 }

@@ -7,7 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.bank.nix.domain.enums.Type;
@@ -16,56 +16,58 @@ import com.bank.nix.domain.enums.Type;
 @Table(name = "BANK_TRANSFER")
 public class BankTransfer {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private BankAccount idBankAccountRecipient;
-    private BankAccount idBankAccountDepositor;
-    private BigDecimal value;
-    private Type type;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    public Long getId() {
-        return id;
-    }
+	@ManyToOne
+	@JoinColumn(name = "id_accout_credit")
+	private BankAccount bankAccountCredit;
 
-    public void setId(final Long id) {
-        this.id = id;
-    }
+	@ManyToOne
+	@JoinColumn(name = "id_accout_debit")
+	private BankAccount bankAccountDebit;
+	private BigDecimal value;
+	private Type type;
 
-    @OneToOne
-    @JoinColumn(name = "ID_BANK_ACCOUNT_RECIPIENT")
-    public BankAccount getIdBankAccountRecipient() {
-        return idBankAccountRecipient;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public void setIdBankAccountRecipient(final BankAccount idBankAccountRecipient) {
-        this.idBankAccountRecipient = idBankAccountRecipient;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    @OneToOne
-    @JoinColumn(name = "ID_BANK_ACCOUNT_DEPOSITOR")
-    public BankAccount getIdBankAccountDepositor() {
-        return idBankAccountDepositor;
-    }
+	public BankAccount getBankAccountCredit() {
+		return bankAccountCredit;
+	}
 
-    public void setIdBankAccountDepositor(final BankAccount idBankAccountDepositor) {
-        this.idBankAccountDepositor = idBankAccountDepositor;
-    }
+	public void setBankAccountCredit(BankAccount bankAccountCredit) {
+		this.bankAccountCredit = bankAccountCredit;
+	}
 
-    public BigDecimal getValue() {
-        return value;
-    }
+	public BankAccount getBankAccountDebit() {
+		return bankAccountDebit;
+	}
 
-    public void setValue(final BigDecimal value) {
-        this.value = value;
-    }
+	public void setBankAccountDebit(BankAccount bankAccountDebit) {
+		this.bankAccountDebit = bankAccountDebit;
+	}
 
-    public Type getType() {
-        return type;
-    }
+	public BigDecimal getValue() {
+		return value;
+	}
 
-    public void setType(final Type type) {
-        this.type = type;
-    }
+	public void setValue(BigDecimal value) {
+		this.value = value;
+	}
+
+	public Type getType() {
+		return type;
+	}
+
+	public void setType(Type type) {
+		this.type = type;
+	}
 
 }
