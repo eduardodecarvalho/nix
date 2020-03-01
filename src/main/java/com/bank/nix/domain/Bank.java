@@ -1,10 +1,15 @@
 package com.bank.nix.domain;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "BANK")
@@ -15,6 +20,10 @@ public class Bank {
 	private Long id;
 	private String name;
 	private String code;
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "bank")
+	private List<BankAccount> bankAccounts;
 
 	public Long getId() {
 		return id;
@@ -38,6 +47,14 @@ public class Bank {
 
 	public void setCode(String code) {
 		this.code = code;
+	}
+
+	public List<BankAccount> getBankAccounts() {
+		return bankAccounts;
+	}
+
+	public void setBankAccounts(List<BankAccount> bankAccounts) {
+		this.bankAccounts = bankAccounts;
 	}
 
 }

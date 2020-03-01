@@ -19,8 +19,14 @@ public class BankTransfer {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private BankAccount idBankAccountRecipient;
-	private BankAccount idBankAccountDepositor;
+
+	@ManyToOne
+	@JoinColumn(name = "id_accout_credit")
+	private BankAccount bankAccountCredit;
+
+	@ManyToOne
+	@JoinColumn(name = "id_accout_debit")
+	private BankAccount bankAccountDebit;
 	private BigDecimal value;
 	private Type type;
 
@@ -32,24 +38,8 @@ public class BankTransfer {
 		this.id = id;
 	}
 
-	@ManyToOne
-	@JoinColumn(name = "credit_transactions")
-	public BankAccount getIdBankAccountRecipient() {
-		return idBankAccountRecipient;
-	}
-
-	public void setIdBankAccountRecipient(BankAccount idBankAccountRecipient) {
-		this.idBankAccountRecipient = idBankAccountRecipient;
-	}
-
-	@ManyToOne
-	@JoinColumn(name = "debit_Transactions")
-	public BankAccount getIdBankAccountDepositor() {
-		return idBankAccountDepositor;
-	}
-
-	public void setIdBankAccountDepositor(BankAccount idBankAccountDepositor) {
-		this.idBankAccountDepositor = idBankAccountDepositor;
+	public void setBankAccountDebit(BankAccount bankAccountDebit) {
+		this.bankAccountDebit = bankAccountDebit;
 	}
 
 	public BigDecimal getValue() {
@@ -66,6 +56,18 @@ public class BankTransfer {
 
 	public void setType(Type type) {
 		this.type = type;
+	}
+
+	public BankAccount getBankAccountCredit() {
+		return bankAccountCredit;
+	}
+
+	public void setBankAccountCredit(BankAccount bankAccountCredit) {
+		this.bankAccountCredit = bankAccountCredit;
+	}
+
+	public BankAccount getBankAccountDebit() {
+		return bankAccountDebit;
 	}
 
 }

@@ -3,7 +3,6 @@ package com.bank.nix.domain;
 import java.math.BigDecimal;
 import java.util.List;
 
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,6 +12,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "BANK_ACCOUNT")
 public class BankAccount {
@@ -20,14 +21,24 @@ public class BankAccount {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private User idUser;
+
+	@ManyToOne
+	@JoinColumn(name = "id_user")
+	private User user;
 	private String accountNumber;
 	private String bankOffice;
-	private Bank bank;
 	private BigDecimal balance;
-	@ElementCollection(targetClass=Integer.class)
+
+	@ManyToOne
+	@JoinColumn(name = "id_bank")
+	private Bank bank;
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "bankAccountCredit")
 	private List<BankTransfer> creditTransactions;
-	@ElementCollection(targetClass=Integer.class)
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "bankAccountDebit")
 	private List<BankTransfer> debitTransactions;
 
 	public Long getId() {
@@ -36,6 +47,14 @@ public class BankAccount {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public String getAccountNumber() {
@@ -54,14 +73,6 @@ public class BankAccount {
 		this.bankOffice = bankOffice;
 	}
 
-	public Bank getBank() {
-		return bank;
-	}
-
-	public void setBank(Bank bank) {
-		this.bank = bank;
-	}
-
 	public BigDecimal getBalance() {
 		return balance;
 	}
@@ -70,17 +81,6 @@ public class BankAccount {
 		this.balance = balance;
 	}
 
-	@ManyToOne
-	@JoinColumn(name = "id_bank_account")
-	public User getIdUser() {
-		return idUser;
-	}
-
-	public void setIdUser(User idUser) {
-		this.idUser = idUser;
-	}
-
-	@OneToMany(mappedBy = "BANK_TRANSFER")
 	public List<BankTransfer> getCreditTransactions() {
 		return creditTransactions;
 	}
@@ -89,13 +89,20 @@ public class BankAccount {
 		this.creditTransactions = creditTransactions;
 	}
 
-	@OneToMany(mappedBy = "BANK_TRANSFER")
 	public List<BankTransfer> getDebitTransactions() {
 		return debitTransactions;
 	}
 
 	public void setDebitTransactions(List<BankTransfer> debitTransactions) {
 		this.debitTransactions = debitTransactions;
+	}
+
+	public Bank getBank() {
+		return bank;
+	}
+
+	public void setBank(Bank bank) {
+		this.bank = bank;
 	}
 
 }
