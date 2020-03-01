@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.bank.nix.domain.enums.Type;
@@ -17,8 +19,14 @@ public class BankTransfer {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private BankAccount idBankAccountRecipient;
-	private BankAccount idBankAccountDepositor;
+
+	@ManyToOne
+	@JoinColumn(name = "id_accout_credit")
+	private BankAccount bankAccountCredit;
+
+	@ManyToOne
+	@JoinColumn(name = "id_accout_debit")
+	private BankAccount bankAccountDebit;
 	private BigDecimal value;
 	private Type type;
 
@@ -30,20 +38,20 @@ public class BankTransfer {
 		this.id = id;
 	}
 
-	public BankAccount getIdBankAccountRecipient() {
-		return idBankAccountRecipient;
+	public BankAccount getBankAccountCredit() {
+		return bankAccountCredit;
 	}
 
-	public void setIdBankAccountRecipient(BankAccount idBankAccountRecipient) {
-		this.idBankAccountRecipient = idBankAccountRecipient;
+	public void setBankAccountCredit(BankAccount bankAccountCredit) {
+		this.bankAccountCredit = bankAccountCredit;
 	}
 
-	public BankAccount getIdBankAccountDepositor() {
-		return idBankAccountDepositor;
+	public BankAccount getBankAccountDebit() {
+		return bankAccountDebit;
 	}
 
-	public void setIdBankAccountDepositor(BankAccount idBankAccountDepositor) {
-		this.idBankAccountDepositor = idBankAccountDepositor;
+	public void setBankAccountDebit(BankAccount bankAccountDebit) {
+		this.bankAccountDebit = bankAccountDebit;
 	}
 
 	public BigDecimal getValue() {

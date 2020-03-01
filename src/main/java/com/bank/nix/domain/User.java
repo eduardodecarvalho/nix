@@ -1,13 +1,15 @@
 package com.bank.nix.domain;
 
-import java.util.Set;
+import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "USER")
@@ -18,7 +20,10 @@ public class User {
 	private Long id;
 	private String name;
 	private String registeredNumber;
-	private Set<BankAccount> bankAccounts;
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "user")
+	private List<BankAccount> idBankAccounts;
 
 	public User() {
 	}
@@ -52,12 +57,12 @@ public class User {
 		this.registeredNumber = registeredNumber.replaceAll("[^0-9]", "");
 	}
 
-	@Column(name = "ID_BANK_ACCOUNT")
-	public Set<BankAccount> getBankAccounts() {
-		return bankAccounts;
+	public List<BankAccount> getIdBankAccounts() {
+		return idBankAccounts;
 	}
 
-	public void setBankAccounts(Set<BankAccount> bankAccounts) {
-		this.bankAccounts = bankAccounts;
+	public void setIdBankAccounts(List<BankAccount> idBankAccounts) {
+		this.idBankAccounts = idBankAccounts;
 	}
+
 }
