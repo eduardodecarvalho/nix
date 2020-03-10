@@ -34,9 +34,8 @@ public class UserService {
         if (verifyRegisteredNumber.isPresent()) {
             throw new NixBusinessException(NixBusinessException.REGISTERED_NUMBER_ALREDY_IN_USE);
         }
-        final User user = new User();
-        user.setName(dto.getName());
-        user.setRegisteredNumber(dto.getRegisteredNumber());
+
+        final User user = new User(dto.getName(), dto.getRegisteredNumber());
         return userRepository.save(user).getId();
     }
 }

@@ -1,6 +1,6 @@
 package com.bank.nix.domain.enums;
 
-public enum Type {
+public enum TransferType {
 
 	TED(1, "Ted"),
 	DOC(2, "Doc");
@@ -8,7 +8,7 @@ public enum Type {
 	private int cod;
 	private String description;
 
-	private Type(int cod, String description) {
+	private TransferType(int cod, String description) {
 		this.cod = cod;
 		this.description = description;
 	}
@@ -21,12 +21,12 @@ public enum Type {
 		return description;
 	}
 
-	public static Type toEnum(Integer cod) {
+	public static TransferType toEnum(Integer cod) {
 		if(cod == null) {
 			return null;
 		}
 
-		for(Type x : Type.values()) {
+		for(TransferType x : TransferType.values()) {
 			if(cod.equals(x.getCod())) {
 				return x;
 			}
