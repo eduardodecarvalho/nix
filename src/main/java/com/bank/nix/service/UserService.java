@@ -14,29 +14,29 @@ import com.bank.nix.service.exception.NixBusinessException;
 @Service
 public class UserService {
 
-	@Autowired
-	private UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
 
-	public List<User> findAll() {
-		return userRepository.findAll();
-	}
+    public List<User> findAll() {
+        return userRepository.findAll();
+    }
 
-	public User findById(Long id) {
-		return userRepository.findById(id)
-				.orElseThrow(() -> new NixBusinessException(NixBusinessException.USER_NOT_FOUND));
-	}
+    public User findById(final Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new NixBusinessException(NixBusinessException.USER_NOT_FOUND));
+    }
 
-	public User create(UserDTO dto) {
-		if(dto.getName() == null || dto.getRegisteredNumber() == null) {
-			throw new NixBusinessException(NixBusinessException.USER_INVALID_DATA);
-		}
-		Optional<User> verifyRegisteredNumber = userRepository.findByRegisteredNumber(dto.getRegisteredNumber());
-		if(verifyRegisteredNumber.isPresent()) {
-			throw new NixBusinessException(NixBusinessException.REGISTERED_NUMBER_ALREDY_IN_USE);
-		}
-		User user = new User();
-		user.setName(dto.getName());
-		user.setRegisteredNumber(dto.getRegisteredNumber());
-		return userRepository.save(user);
-	}
+    public Long create(final UserDTO dto) {
+        if (dto.getName() == null || dto.getRegisteredNumber() == null) {
+            throw new NixBusinessException(NixBusinessException.USER_INVALID_DATA);
+        }
+        final Optional<User> verifyRegisteredNumber = userRepository.findByRegisteredNumber(dto.getRegisteredNumber());
+        if (verifyRegisteredNumber.isPresent()) {
+            throw new NixBusinessException(NixBusinessException.REGISTERED_NUMBER_ALREDY_IN_USE);
+        }
+        final User user = new User();
+        user.setName(dto.getName());
+        user.setRegisteredNumber(dto.getRegisteredNumber());
+        return userRepository.save(user).getId();
+    }
 }

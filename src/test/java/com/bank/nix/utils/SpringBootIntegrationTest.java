@@ -9,12 +9,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @ActiveProfiles("test")
-//@TestPropertySource(locations = "classpath:application-test.properties")
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @Transactional
@@ -28,6 +28,9 @@ public abstract class SpringBootIntegrationTest {
     @Autowired
     protected TestRestTemplate restTemplate;
 
+    @Autowired
+    private MessageSource messageSource;
+
     protected HttpStatus getPageStatusCode(final String path) {
         try {
             return restTemplate.getForEntity(path, String.class).getStatusCode();
@@ -36,4 +39,5 @@ public abstract class SpringBootIntegrationTest {
             return null;
         }
     }
+
 }
