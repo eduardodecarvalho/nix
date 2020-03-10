@@ -14,6 +14,7 @@ import com.bank.nix.service.exception.NixBusinessException;
 @Service
 public class UserService {
 
+<<<<<<< Updated upstream
 	@Autowired
 	private UserRepository userRepository;
 
@@ -39,4 +40,29 @@ public class UserService {
 		user.setRegisteredNumber(dto.getRegisteredNumber());
 		return userRepository.save(user);
 	}
+=======
+    @Autowired
+    private UserRepository userRepository;
+
+    public List<User> findAll() {
+        return userRepository.findAll();
+    }
+
+    public User findById(final Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new NixBusinessException(NixBusinessException.USER_NOT_FOUND));
+    }
+
+    public Long create(final UserDTO dto) {
+        if (dto.getName() == null || dto.getRegisteredNumber() == null) {
+            throw new NixBusinessException(NixBusinessException.USER_INVALID_DATA);
+        }
+        final Optional<User> verifyRegisteredNumber = userRepository.findByRegisteredNumber(dto.getRegisteredNumber());
+        if (verifyRegisteredNumber.isPresent()) {
+            throw new NixBusinessException(NixBusinessException.REGISTERED_NUMBER_ALREDY_IN_USE);
+        }
+        final User user = new User(dto.getName(), dto.getRegisteredNumber());
+        return userRepository.save(user).getId();
+    }
+>>>>>>> Stashed changes
 }

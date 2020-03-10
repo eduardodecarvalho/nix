@@ -10,7 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.bank.nix.domain.enums.Type;
+import com.bank.nix.domain.enums.TransferType;
 
 @Entity
 @Table(name = "BANK_TRANSFER")
@@ -28,7 +28,7 @@ public class BankTransfer {
 	@JoinColumn(name = "id_accout_debit")
 	private BankAccount bankAccountDebit;
 	private BigDecimal value;
-	private Type type;
+	private TransferType type;
 
 	public Long getId() {
 		return id;
@@ -50,11 +50,11 @@ public class BankTransfer {
 		this.value = value;
 	}
 
-	public Type getType() {
+	public TransferType getType() {
 		return type;
 	}
 
-	public void setType(Type type) {
+	public void setType(TransferType type) {
 		this.type = type;
 	}
 

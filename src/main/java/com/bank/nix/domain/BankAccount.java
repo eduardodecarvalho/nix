@@ -18,91 +18,92 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Table(name = "BANK_ACCOUNT")
 public class BankAccount {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	@ManyToOne
-	@JoinColumn(name = "id_user")
-	private User user;
-	private String accountNumber;
-	private String bankOffice;
-	private BigDecimal balance;
+    @ManyToOne
+    @JoinColumn(name = "id_user")
+    private User user;
 
-	@ManyToOne
-	@JoinColumn(name = "id_bank")
-	private Bank bank;
+    private String accountNumber;
+    private String bankOffice;
+    private BigDecimal balance;
 
-	@JsonIgnore
-	@OneToMany(mappedBy = "bankAccountCredit")
-	private List<BankTransfer> creditTransactions;
+    @ManyToOne
+    @JoinColumn(name = "id_bank")
+    private Bank bank;
 
-	@JsonIgnore
-	@OneToMany(mappedBy = "bankAccountDebit")
-	private List<BankTransfer> debitTransactions;
+    @JsonIgnore
+    @OneToMany(mappedBy = "bankAccountCredit")
+    private List<BankTransfer> creditTransactions;
 
-	public Long getId() {
-		return id;
-	}
+    @JsonIgnore
+    @OneToMany(mappedBy = "bankAccountDebit")
+    private List<BankTransfer> debitTransactions;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public User getUser() {
-		return user;
-	}
+    public void setId(final Long id) {
+        this.id = id;
+    }
 
-	public void setUser(User user) {
-		this.user = user;
-	}
+    public User getUser() {
+        return user;
+    }
 
-	public String getAccountNumber() {
-		return accountNumber;
-	}
+    public void setUser(final User user) {
+        this.user = user;
+    }
 
-	public void setAccountNumber(String accountNumber) {
-		this.accountNumber = accountNumber;
-	}
+    public String getAccountNumber() {
+        return accountNumber;
+    }
 
-	public String getBankOffice() {
-		return bankOffice;
-	}
+    public void setAccountNumber(final String accountNumber) {
+        this.accountNumber = accountNumber;
+    }
 
-	public void setBankOffice(String bankOffice) {
-		this.bankOffice = bankOffice;
-	}
+    public String getBankOffice() {
+        return bankOffice;
+    }
 
-	public BigDecimal getBalance() {
-		return balance;
-	}
+    public void setBankOffice(final String bankOffice) {
+        this.bankOffice = bankOffice;
+    }
 
-	public void setBalance(BigDecimal balance) {
-		this.balance = balance;
-	}
+    public BigDecimal getBalance() {
+        return balance;
+    }
 
-	public List<BankTransfer> getCreditTransactions() {
-		return creditTransactions;
-	}
+    public void setBalance(final BigDecimal balance) {
+        this.balance = balance;
+    }
 
-	public void setCreditTransactions(List<BankTransfer> creditTransactions) {
-		this.creditTransactions = creditTransactions;
-	}
+    public List<BankTransfer> getCreditTransactions() {
+        return creditTransactions;
+    }
 
-	public List<BankTransfer> getDebitTransactions() {
-		return debitTransactions;
-	}
+    public void setCreditTransactions(final List<BankTransfer> creditTransactions) {
+        this.creditTransactions = creditTransactions;
+    }
 
-	public void setDebitTransactions(List<BankTransfer> debitTransactions) {
-		this.debitTransactions = debitTransactions;
-	}
+    public List<BankTransfer> getDebitTransactions() {
+        return debitTransactions;
+    }
 
-	public Bank getBank() {
-		return bank;
-	}
+    public void setDebitTransactions(final List<BankTransfer> debitTransactions) {
+        this.debitTransactions = debitTransactions;
+    }
 
-	public void setBank(Bank bank) {
-		this.bank = bank;
-	}
+    public Bank getBank() {
+        return bank;
+    }
+
+    public void setBank(final Bank bank) {
+        this.bank = bank;
+    }
 
 }
