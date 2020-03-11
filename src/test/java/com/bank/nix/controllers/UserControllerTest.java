@@ -72,4 +72,35 @@ class UserControllerTest extends SpringBootIntegrationTest {
         JSONAssert.assertEquals(dtoString, actual, false);
 
     }
+
+    @Test
+    void createWithoutNameShouldReturnError() throws Exception {
+        final String dtoString = "{" +
+                "    \"registeredNumber\": \"12345698700\""
+                + "} ";
+        final UserDTO dto = new ObjectMapper().readValue(dtoString, UserDTO.class);
+        final ResponseEntity<String> responseEntity = restTemplate.postForEntity("http://localhost:" + port + "/users/create", dto, String.class);
+        Assert.assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+    }
+
+    @Test
+    void createWithoutRegisteredNumberShouldReturnError() throws Exception {
+        final String dtoString = "{" +
+                "    \"name\": \"João\"" +
+                "} ";
+        final UserDTO dto = new ObjectMapper().readValue(dtoString, UserDTO.class);
+        final ResponseEntity<String> responseEntity = restTemplate.postForEntity("http://localhost:" + port + "/users/create", dto, String.class);
+        Assert.assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+    }
+
+    @Test
+    void createWithoutDuplicatedRegisteredNumberShouldReturnError() throws Exception {
+        final String dtoString = "{" +
+                "    \"name\": \"João\"," +
+                "    \"registeredNumber\": \"12365478996\"" +
+                "} ";
+        final UserDTO dto = new ObjectMapper().readValue(dtoString, UserDTO.class);
+        final ResponseEntity<String> responseEntity = restTemplate.postForEntity("http://localhost:" + port + "/users/create", dto, String.class);
+        Assert.assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+    }
 }
