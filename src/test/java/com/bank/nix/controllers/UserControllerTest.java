@@ -1,9 +1,13 @@
 package com.bank.nix.controllers;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -103,4 +107,22 @@ class UserControllerTest extends SpringBootIntegrationTest {
         final ResponseEntity<String> responseEntity = restTemplate.postForEntity("http://localhost:" + port + "/users/create", dto, String.class);
         Assert.assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
     }
+
+    @Test
+    void updateUserName() throws Exception {
+        final Long id = 1L;
+
+        final String dtoString = " {" +
+                "    \"name\": \"Maria da Silva\"" +
+                "} ";
+        final UserDTO dto = new ObjectMapper().readValue(dtoString, UserDTO.class);
+
+        final ResponseEntity<String> responseEntity = restTemplate.exchange("http://localhost:" + port + "/users/update/" + id, HttpMethod.PUT, new HttpEntity<>(dto), String.class);
+        Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+
+        final User actual = new User(userRepository.findById(id).get());
+
+        assertEquals(dto.getName().trim(), actual.getName());
+    }
+
 }

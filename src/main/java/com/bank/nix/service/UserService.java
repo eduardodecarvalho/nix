@@ -38,4 +38,10 @@ public class UserService {
         final User user = new User(dto.getName(), dto.getRegisteredNumber());
         return userRepository.save(user).getId();
     }
+
+    public void update(final UserDTO dto, final Long userId) {
+        final User user = new User(dto.getName(), dto.getRegisteredNumber());
+        user.setId(userId);
+        userRepository.save(user).getId();
+    }
 }
