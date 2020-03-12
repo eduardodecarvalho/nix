@@ -30,7 +30,7 @@ public class User {
 
     public User(final String name, final String registeredNumber) {
         this.name = name;
-        this.registeredNumber = registeredNumber;
+        this.registeredNumber = registeredNumber.replaceAll("[^0-9]", "");
     }
 
     public User(final User user) {
@@ -56,10 +56,6 @@ public class User {
 
     public String getRegisteredNumber() {
         return registeredNumber;
-    }
-
-    public void setRegisteredNumber(final String registeredNumber) {
-        this.registeredNumber = registeredNumber.replaceAll("[^0-9]", "");
     }
 
     public List<BankAccount> getIdBankAccounts() {

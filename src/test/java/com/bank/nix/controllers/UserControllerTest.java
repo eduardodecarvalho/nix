@@ -1,6 +1,7 @@
 package com.bank.nix.controllers;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
@@ -113,7 +114,8 @@ class UserControllerTest extends SpringBootIntegrationTest {
         final Long id = 1L;
 
         final String dtoString = " {" +
-                "    \"name\": \"Maria da Silva\"" +
+                "    \"name\": \"Maria da Silva\"," +
+                "    \"registeredNumber\": \"12365478996\"" +
                 "} ";
         final UserDTO dto = new ObjectMapper().readValue(dtoString, UserDTO.class);
 
@@ -125,4 +127,13 @@ class UserControllerTest extends SpringBootIntegrationTest {
         assertEquals(dto.getName().trim(), actual.getName());
     }
 
+    @Test
+    void deleteUser() {
+        final Long idToDelete = 1L;
+
+        final ResponseEntity<String> responseEntity = restTemplate.exchange("http://localhost:" + port + "/users/delete/" + idToDelete, HttpMethod.DELETE, null, String.class);
+        Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+
+        assertFalse(userRepository.findById(idToDelete).isPresent());
+    }
 }

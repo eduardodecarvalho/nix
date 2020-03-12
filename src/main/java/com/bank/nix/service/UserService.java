@@ -40,8 +40,22 @@ public class UserService {
     }
 
     public void update(final UserDTO dto, final Long userId) {
-        final User user = new User(dto.getName(), dto.getRegisteredNumber());
+        final User user = userRepository.findById(userId).orElseThrow(() -> new NixBusinessException(NixBusinessException.USER_NOT_FOUND));
+
+        if (dto.getName() == null || dto.getRegisteredNumber() == null) {
+            throw new NixBusinessException(NixBusinessException.USER_INVALID_DATA);
+        }
+
         user.setId(userId);
+        user.setName(dto.getName());
+
         userRepository.save(user).getId();
+    }
+
+    public void delete(final Long userId) {
+        final User user = userRepository.findById(userId).orElseThrow(() -> new NixBusinessException(NixBusinessException.USER_NOT_FOUND));
+
+        userRepository.delete(user);
+
     }
 }
