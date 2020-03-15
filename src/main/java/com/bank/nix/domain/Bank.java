@@ -25,6 +25,14 @@ public class Bank {
 	@OneToMany(mappedBy = "bank")
 	private List<BankAccount> bankAccounts;
 
+	public Bank(Bank bank) {
+	}
+
+	public Bank(String name, String code) {
+		this.name = name;
+		this.code = code;
+	}
+
 	public Long getId() {
 		return id;
 	}

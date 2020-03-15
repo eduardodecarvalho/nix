@@ -4,33 +4,34 @@ import java.io.Serializable;
 
 public class UserDTO implements Serializable {
 
-    private static final long serialVersionUID = 3878656591186207046L;
 
-    private String name;
-    private String registeredNumber;
+	private static final long serialVersionUID = -1876936620812517852L;
 
-    public UserDTO() {
-    }
+	private String name;
+	private String registeredNumber;
 
-    public UserDTO(final String name, final String registeredNumber) {
-        this.name = name;
-        this.registeredNumber = registeredNumber;
-    }
+	public UserDTO() {
+	}
 
-    public String getName() {
-        return name;
-    }
+	public UserDTO(final String name, final String registeredNumber) {
+		this.name = name;
+		this.registeredNumber = registeredNumber;
+	}
 
-    public void setName(final String name) {
-        this.name = name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public String getRegisteredNumber() {
-        return registeredNumber;
-    }
+	public void setName(final String name) {
+		this.name = name;
+	}
 
-    public void setRegisteredNumber(final String registeredNumber) {
-        this.registeredNumber = registeredNumber;
-    }
+	public String getRegisteredNumber() {
+		return registeredNumber;
+	}
+
+	public void setRegisteredNumber(final String registeredNumber) {
+		this.registeredNumber = registeredNumber;
+	}
 
 }
