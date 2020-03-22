@@ -27,7 +27,7 @@ class UserControllerTest extends SpringBootIntegrationTest {
 
     @Test
     void findAll() throws Exception {
-        final ResponseEntity<String> responseEntity = restTemplate.getForEntity("http://localhost:" + port + "/users/all", String.class);
+        final ResponseEntity<String> responseEntity = restTemplate.getForEntity("http://localhost:" + port + "/users", String.class);
         Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 
         final String expected = " [ {" +
@@ -67,7 +67,7 @@ class UserControllerTest extends SpringBootIntegrationTest {
 
         final UserDTO dto = new ObjectMapper().readValue(dtoString, UserDTO.class);
 
-        final ResponseEntity<String> responseEntity = restTemplate.postForEntity("http://localhost:" + port + "/users/create", dto, String.class);
+        final ResponseEntity<String> responseEntity = restTemplate.postForEntity("http://localhost:" + port + "/users", dto, String.class);
         Assert.assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
 
         final Long createdId = Long.parseLong(responseEntity.getBody());
@@ -84,7 +84,7 @@ class UserControllerTest extends SpringBootIntegrationTest {
                 "    \"registeredNumber\": \"12345698700\""
                 + "} ";
         final UserDTO dto = new ObjectMapper().readValue(dtoString, UserDTO.class);
-        final ResponseEntity<String> responseEntity = restTemplate.postForEntity("http://localhost:" + port + "/users/create", dto, String.class);
+        final ResponseEntity<String> responseEntity = restTemplate.postForEntity("http://localhost:" + port + "/users", dto, String.class);
         Assert.assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
     }
 
@@ -94,7 +94,7 @@ class UserControllerTest extends SpringBootIntegrationTest {
                 "    \"name\": \"João\"" +
                 "} ";
         final UserDTO dto = new ObjectMapper().readValue(dtoString, UserDTO.class);
-        final ResponseEntity<String> responseEntity = restTemplate.postForEntity("http://localhost:" + port + "/users/create", dto, String.class);
+        final ResponseEntity<String> responseEntity = restTemplate.postForEntity("http://localhost:" + port + "/users", dto, String.class);
         Assert.assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
     }
 
@@ -105,7 +105,7 @@ class UserControllerTest extends SpringBootIntegrationTest {
                 "    \"registeredNumber\": \"12365478996\"" +
                 "} ";
         final UserDTO dto = new ObjectMapper().readValue(dtoString, UserDTO.class);
-        final ResponseEntity<String> responseEntity = restTemplate.postForEntity("http://localhost:" + port + "/users/create", dto, String.class);
+        final ResponseEntity<String> responseEntity = restTemplate.postForEntity("http://localhost:" + port + "/users", dto, String.class);
         Assert.assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
     }
 
@@ -119,7 +119,7 @@ class UserControllerTest extends SpringBootIntegrationTest {
                 "} ";
         final UserDTO dto = new ObjectMapper().readValue(dtoString, UserDTO.class);
 
-        final ResponseEntity<String> responseEntity = restTemplate.exchange("http://localhost:" + port + "/users/update/" + id, HttpMethod.PUT, new HttpEntity<>(dto), String.class);
+        final ResponseEntity<String> responseEntity = restTemplate.exchange("http://localhost:" + port + "/users" + id, HttpMethod.PUT, new HttpEntity<>(dto), String.class);
         Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 
         final User actual = new User(userRepository.findById(id).get());
@@ -131,7 +131,7 @@ class UserControllerTest extends SpringBootIntegrationTest {
     void deleteUser() {
         final Long idToDelete = 1L;
 
-        final ResponseEntity<String> responseEntity = restTemplate.exchange("http://localhost:" + port + "/users/delete/" + idToDelete, HttpMethod.DELETE, null, String.class);
+        final ResponseEntity<String> responseEntity = restTemplate.exchange("http://localhost:" + port + "/users/" + idToDelete, HttpMethod.DELETE, null, String.class);
         Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 
         assertFalse(userRepository.findById(idToDelete).isPresent());

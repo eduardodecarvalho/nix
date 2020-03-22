@@ -26,7 +26,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/all")
+    @GetMapping()
     public List<UserDTO> findAll() {
         return userService.findAll().stream().map(
                 c -> new UserDTO(c.getName(), c.getRegisteredNumber())).collect(Collectors.toList());
@@ -38,18 +38,18 @@ public class UserController {
         return new UserDTO(user.getName(), user.getRegisteredNumber());
     }
 
-    @PostMapping("/create")
+    @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     public Long create(@RequestBody final UserDTO dto) {
         return userService.create(dto);
     }
 
-    @PutMapping("/update/{userId}")
+    @PutMapping("/{userId}")
     public void update(@RequestBody final UserDTO dto, @PathVariable final Long userId) {
         userService.update(dto, userId);
     }
 
-    @DeleteMapping("/delete/{userId}")
+    @DeleteMapping("/{userId}")
     public void delete(@PathVariable final Long userId) {
         userService.delete(userId);
     }
