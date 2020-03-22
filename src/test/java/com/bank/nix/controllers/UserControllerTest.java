@@ -130,7 +130,6 @@ class UserControllerTest extends SpringBootIntegrationTest {
     @Test
     void deleteUser() {
         final Long idToDelete = 1L;
-
         final ResponseEntity<String> responseEntity = restTemplate.exchange("http://localhost:" + port + "/users/" + idToDelete, HttpMethod.DELETE, null, String.class);
         Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 
