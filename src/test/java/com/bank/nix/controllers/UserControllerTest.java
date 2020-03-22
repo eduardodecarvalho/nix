@@ -119,7 +119,7 @@ class UserControllerTest extends SpringBootIntegrationTest {
                 "} ";
         final UserDTO dto = new ObjectMapper().readValue(dtoString, UserDTO.class);
 
-        final ResponseEntity<String> responseEntity = restTemplate.exchange("http://localhost:" + port + "/users" + id, HttpMethod.PUT, new HttpEntity<>(dto), String.class);
+        final ResponseEntity<String> responseEntity = restTemplate.exchange("http://localhost:" + port + "/users/" + id, HttpMethod.PUT, new HttpEntity<>(dto), String.class);
         Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 
         final User actual = new User(userRepository.findById(id).get());
