@@ -13,6 +13,10 @@ public class NixBusinessException extends RuntimeException {
     public static final String ACCOUNT_INVALID_DATA = "account_invalid_data";
     public static final String USER_INVALID_DATA = "user_invalid_data";
 
+    public static final String BANK_NOT_FOUND = "bank_not_found";
+    public static final String BANK_INVALID_DATA = "bank_invalid_data";
+    public static final String CODE_ALREDY_IN_USE = "code_alredy_in_use";
+
     public NixBusinessException(final String msg) {
         super(msg);
     }

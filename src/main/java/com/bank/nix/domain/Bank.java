@@ -2,7 +2,9 @@ package com.bank.nix.domain;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,46 +17,51 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Table(name = "BANK")
 public class Bank {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	private String name;
-	private String code;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String name;
+    private String code;
 
-	@JsonIgnore
-	@OneToMany(mappedBy = "bank")
-	private List<BankAccount> bankAccounts;
+    @JsonIgnore
+    @OneToMany(mappedBy = "bank", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<BankAccount> bankAccounts;
 
-	public Long getId() {
-		return id;
-	}
+    public Bank() {
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public Bank(final String name, final String code) {
+        this.name = name;
+        this.code = code;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public Bank(final Bank bank) {
+        this.name = bank.getName();
+        this.code = bank.getCode();
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public String getCode() {
-		return code;
-	}
+    public void setId(final Long id) {
+        this.id = id;
+    }
 
-	public void setCode(String code) {
-		this.code = code;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public List<BankAccount> getBankAccounts() {
-		return bankAccounts;
-	}
+    public String getCode() {
+        return code;
+    }
 
-	public void setBankAccounts(List<BankAccount> bankAccounts) {
-		this.bankAccounts = bankAccounts;
-	}
+    public List<BankAccount> getBankAccounts() {
+        return bankAccounts;
+    }
+
+    public void setBankAccounts(final List<BankAccount> bankAccounts) {
+        this.bankAccounts = bankAccounts;
+    }
 
 }
